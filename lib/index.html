@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>minesweeper</title>
+    <script src="minesweeper.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+      #game {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game"></div>
+    <script type="text/javascript">
+      (function () {
+        var ms = new Minesweeper(document.getElementById('game'));
+        ms.start();
+      })();
+    </script>
+  </body>
+</html>

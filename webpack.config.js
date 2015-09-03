@@ -1,20 +1,24 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './src/main.ts',
+  entry: './src/index.ts',
   output: {
-    path: './public',
-    filename: 'main.js',
+    path: './lib',
+    filename: 'minesweeper.js',
+    library: 'Minesweeper',
   },
 
   devServer: {
-    contentBase: "./public",
+    contentBase: "./lib",
     publicPath: "/",
     colors: true,
   },
 
   bail: true,
   debug: true,
+  node: {
+    fs: 'empty',
+  },
 
   devtool: 'inline-source-map',
 
@@ -45,6 +49,10 @@ module.exports = {
       {
         test: /\.svg$/,
         loader: 'url?limit=10000&mimetype=image/svg+xml',
+      },
+      {
+        test: /\.json$/,
+        loader: 'json',
       },
       {
         test: /\.ts$/,

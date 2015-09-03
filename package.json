@@ -12,6 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "file-loader": "^0.8.4",
+    "json-loader": "^0.5.2",
     "lodash": "^3.10.1",
     "pixi.js": "^3.0.7",
     "ts-loader": "^0.5.2",
