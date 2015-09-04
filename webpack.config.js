@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: './src/index.tsx',
   output: {
     path: './lib',
     filename: 'minesweeper.js',
@@ -30,7 +30,7 @@ module.exports = {
   ],
 
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.ts'],
+    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.ts', '.tsx'],
   },
 
   module: {
@@ -51,11 +51,15 @@ module.exports = {
         loader: 'url?limit=10000&mimetype=image/svg+xml',
       },
       {
+        test: /\.scss$/,
+        loader: "style!css!sass",
+      },
+      {
         test: /\.json$/,
         loader: 'json',
       },
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
         loader: 'ts',
         // loader: 'typescript-simple',

@@ -7,6 +7,9 @@
   "installed": {
     "pixi.js/pixi.js.d.ts": {
       "commit": "8efeb01304406a7ef0b49e449630e1bfaefe52ba"
+    },
+    "react/react.d.ts": {
+      "commit": "9ce3cd4ded7536d40b8d65264ad729f442f5a052"
     }
   }
 }
