@@ -2,14 +2,20 @@
 
 import * as React from 'react';
 
-class DigitalDisplay extends React.Component<DigitalDisplay.Props, {}> {
+
+interface Props {
+  digits: number;
+  number: number;
+}
+
+export default class DigitalDisplay extends React.Component<Props, {}> {
 
   static PropTypes: {[index: string]: React.Requireable<any>} = {
     digits: React.PropTypes.number,
     number: React.PropTypes.number,
   }
 
-  static defaultProps: DigitalDisplay.Props = {
+  static defaultProps: Props = {
     digits: 3,
     number: 0,
   }
@@ -19,7 +25,14 @@ class DigitalDisplay extends React.Component<DigitalDisplay.Props, {}> {
   }
 
   render(): JSX.Element {
-    const num = this.props.number.toString(10);
+    let num = this.props.number.toString(10);
+    if (num.length > this.props.digits) {
+      num = '9'.repeat(this.props.digits);
+    }
+    else if (num.length < this.props.digits) {
+      num = '0'.repeat(this.props.digits - num.length) + num;
+    }
+
     const digits = [];
     for (let i = 0; i < num.length; i++) {
       digits.push(<span className={`ms-digit ms-digit-${num.charAt(i)}`}></span>);
@@ -33,12 +46,3 @@ class DigitalDisplay extends React.Component<DigitalDisplay.Props, {}> {
   }
 
 }
-
-module DigitalDisplay {
-  export interface Props {
-    digits: number;
-    number: number;
-  }
-}
-
-export default DigitalDisplay;

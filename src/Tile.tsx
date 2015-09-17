@@ -12,13 +12,29 @@ possible states:
     flag
 */
 
-class Tile extends React.Component<Tile.Props, Tile.State> {
+export interface Props {
+  value?: string;
+}
+
+export interface State {
+  game: GameState;
+}
+
+export enum GameState {
+  DEFAULT,
+  REVEALED,
+  FLAGGED,
+}
+
+export default class Tile extends React.Component<Props, State> {
+
+  static GameState = GameState;
 
   static PropTypes: {[index: string]: React.Requireable<any>} = {
     value: React.PropTypes.string,
   }
 
-  static defaultProps: Tile.Props = {
+  static defaultProps: Props = {
     value: '0',
   }
 
@@ -26,17 +42,17 @@ class Tile extends React.Component<Tile.Props, Tile.State> {
     super(props);
 
     this.state = {
-      game: Tile.GameState.DEFAULT
+      game: GameState.DEFAULT
     };
   }
 
   render(): JSX.Element {
     let state;
 
-    if (this.state.game === Tile.GameState.REVEALED) {
+    if (this.state.game === GameState.REVEALED) {
       state = `ms-revealed-${this.props.value}`;
     }
-    else if (this.state.game === Tile.GameState.FLAGGED) {
+    else if (this.state.game === GameState.FLAGGED) {
       state = 'ms-flagged';
     }
     else {
@@ -45,20 +61,3 @@ class Tile extends React.Component<Tile.Props, Tile.State> {
     return (<span className={'ms-tile ' + state}></span>);
   }
 }
-
-module Tile {
-  export interface Props {
-    value?: string;
-  }
-  export interface State {
-    game: GameState;
-  }
-  export enum GameState {
-    DEFAULT,
-    REVEALED,
-    FLAGGED,
-  }
-}
-
-
-export default Tile;

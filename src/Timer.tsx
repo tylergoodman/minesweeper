@@ -3,9 +3,17 @@
 import * as React from 'react';
 import DigitalDisplay from './DigitalDisplay';
 
-class Timer extends React.Component<Timer.Props, Timer.State> {
 
-  interval: number;
+interface Props {
+  start: number;
+}
+interface State {
+  seconds: number;
+}
+
+export default class Timer extends React.Component<Props, State> {
+
+  interval: number = -1;
 
   constructor(props) {
     super(props);
@@ -13,15 +21,17 @@ class Timer extends React.Component<Timer.Props, Timer.State> {
     this.state = {
       seconds: 0,
     };
+
+    this.componentWillReceiveProps(this.props); // this doesn't happen on first render by default
   }
 
-  componentWillReceiveProps(nextProps: Timer.Props): void {
+  componentWillReceiveProps(nextProps: Props): void {
     // if we're asked to be stopped
     if (nextProps.start === -1) {
       // if we're running, stop
       if (this.interval !== -1) {
         // stop running
-        window.clearInterval(this.interval);
+        clearInterval(this.interval);
       }
     }
     // if we're asked to be running
@@ -29,9 +39,13 @@ class Timer extends React.Component<Timer.Props, Timer.State> {
       // if we're not running
       if (this.interval === -1) {
         // run
-        window.setInterval(this.tick.bind(this));
+        this.interval = setInterval(this.tick.bind(this));
       }
     }
+  }
+
+  componentWillUnmount(): void {
+    clearInterval(this.interval);
   }
 
   tick(): void {
@@ -46,14 +60,3 @@ class Timer extends React.Component<Timer.Props, Timer.State> {
     );
   }
 }
-
-module Timer {
-  export interface Props {
-    start: number;
-  }
-  export interface State {
-    seconds: number;
-  }
-}
-
-export default Timer;

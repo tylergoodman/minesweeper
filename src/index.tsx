@@ -1,12 +1,36 @@
 /// <reference path='../typings/tsd.d.ts'/>
 
-import './styles.scss';
+import './main.scss';
 import * as React from 'react';
 import Tile from './Tile';
 import Timer from './Timer';
 import DigitalDisplay from './DigitalDisplay';
+import Dude from './Dude';
+import Game from './Game/index';
 
-class Minesweeper extends React.Component<Minesweeper.Props, Minesweeper.State> {
+interface Props {
+  initialWidth: number;
+  initialHeight: number;
+  initialMines: number;
+}
+
+interface State {
+  width: number;
+  height: number;
+  mines: number;
+  time: number;
+  state: GameState;
+}
+
+enum GameState {
+  OVER,
+  RUNNING,
+  WAITING,
+}
+
+class Minesweeper extends React.Component<Props, State> {
+
+  static Game = Game;
 
   static propTypes: {[index: string]: React.Requireable<any>} = {
     initialWidth: React.PropTypes.number,
@@ -14,7 +38,7 @@ class Minesweeper extends React.Component<Minesweeper.Props, Minesweeper.State> 
     initialMines: React.PropTypes.number,
   }
 
-  static defaultProps: Minesweeper.Props = {
+  static defaultProps: Props = {
     // initialWidth: 30,
     // initialHeight: 16,
     initialWidth: 10,
@@ -30,47 +54,26 @@ class Minesweeper extends React.Component<Minesweeper.Props, Minesweeper.State> 
       height: this.props.initialHeight,
       mines: this.props.initialMines,
       time: 0,
-      state: Minesweeper.GameState.WAITING,
+      state: GameState.WAITING,
     };
   }
 
   render(): JSX.Element {
-    // const tiles = [];
-    // for (let i = 0; i < this.state.width * this.state.height; i++) {
-    //   tiles.push(<Tile />);
-    // }
-
-        // <Timer start={-1} />
-        // <Timer start={Date.now()} />
+    const tiles = [];
+    for (let i = 0; i < this.state.width * this.state.height; i++) {
+      tiles.push(<Tile />);
+    }
 
     return (
       <div className='ms-minesweeper'>
-        <DigitalDisplay digits={10} number={1234567890}/>
+        <DigitalDisplay digits={3} number={this.state.mines} />
+        <Dude />
+        <Timer start={Date.now()} />
+        <div className='ms-board'>
+          {tiles}
+        </div>
       </div>
     );
-  }
-}
-
-module Minesweeper {
-
-  export interface Props {
-    initialWidth: number;
-    initialHeight: number;
-    initialMines: number;
-  }
-
-  export interface State {
-    width: number;
-    height: number;
-    mines: number;
-    time: number;
-    state: GameState;
-  }
-
-  export enum GameState {
-    OVER,
-    RUNNING,
-    WAITING,
   }
 }
 

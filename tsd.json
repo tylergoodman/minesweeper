@@ -10,6 +10,15 @@
     },
     "react/react.d.ts": {
       "commit": "9ce3cd4ded7536d40b8d65264ad729f442f5a052"
+    },
+    "lodash/lodash.d.ts": {
+      "commit": "5f480287834a2615274eea31574b713e64decf17"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "4356af494c045299110677b21e62000957e7a72e"
+    },
+    "should/should.d.ts": {
+      "commit": "4356af494c045299110677b21e62000957e7a72e"
     }
   }
 }

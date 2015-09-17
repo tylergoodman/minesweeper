@@ -16,9 +16,15 @@ $border-size: 12;
   border-image-slice: $border-size;
   border-image-source: url("textures/borders.png");
 
-  .ms-tile {
-    flex-grow: 1;
+  .icon {
+    display: inline-block;
     background-repeat: no-repeat;
+  }
+
+  .ms-tile {
+    @extend .icon;
+
+    flex-grow: 1;
     min-width: $tile-size * 1px;
     min-height: $tile-size * 1px;
 
@@ -49,7 +55,8 @@ $border-size: 12;
     position: relative;
 
     .ms-digit {
-      display: inline-block;
+      @extend .icon;
+
       min-width: 13px;
       min-height: 23px;
 
@@ -60,4 +67,22 @@ $border-size: 12;
       }
     }
   }
+
+  .ms-dude {
+    @extend .icon;
+
+    min-width: 26px;
+    min-height: 26px;
+
+    $faces: "default" "dead" "pressed" "win";
+    @each $face in $faces {
+      &.ms-dude-#{$face} {
+        background-image: url("textures/face/#{$face}.png");
+      }
+    }
+    &.ms-dude-default:active {
+      background-image: url("textures/face/default_pressed.png");
+    }
+  }
+
 }
