@@ -1,33 +1,38 @@
 var webpack = require('webpack');
 var webpack_config = require('./webpack.config');
 
-// webpack_config.module.loaders = undefined;
+webpack_config.entry = undefined;
+webpack_config.output = undefined;
 webpack_config.devtool = undefined;
-// webpack_config.plugins.push(new webpack.IgnorePlugin(/\.scss$/));
+// webpack_config.module.loaders = undefined;
+webpack_config.plugins.push(new webpack.IgnorePlugin(/\.scss$/));
 
 module.exports = function(wallaby) {
 
   return {
     files: [
-      {
-        pattern: 'node_modules/react-tools/src/test/phantomjs-shims.js',
-        instrument: false,
-      },
-      {
-        pattern: 'src/**/*.ts*',
-        load: false,
-      },
+      'src/**/*.ts*',
+      // {
+      //   pattern: 'node_modules/react-tools/src/test/phantomjs-shims.js',
+      //   instrument: false,
+      // },
+      // {
+      //   pattern: 'src/**/*.ts*',
+      //   load: false,
+      // },
     ],
 
     tests: [
-      {
-        pattern: 'test/**/*.coffee',
-        load: false,
-      },
-      {
-        pattern: 'test/**/*.ts*',
-        load: false,
-      },
+      'test/**/*.coffee',
+      'test/**/*.ts*',
+      // {
+      //   pattern: 'test/**/*.coffee',
+      //   load: false,
+      // },
+      // {
+      //   pattern: 'test/**/*.ts*',
+      //   load: false,
+      // },
     ],
 
     compilers: {
@@ -39,18 +44,18 @@ module.exports = function(wallaby) {
       }),
     },
 
-    postprocessor: require('wallaby-webpack')(webpack_config),
-
-    bootstrap: function () {
-      window.__moduleBundler.loadTests();
-    },
+    // postprocessor: require('wallaby-webpack')(webpack_config),
+    //
+    // bootstrap: function () {
+    //   __moduleBundler.loadTests();
+    // },
 
     debug: true,
 
-    // env: {
-    //   type: 'node',
+    env: {
+      type: 'node',
     //   type: 'browser',
     //   runner: 'phantomjs',
-    // },
+    },
   };
 }
