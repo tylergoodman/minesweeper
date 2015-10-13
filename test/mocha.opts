@@ -1,5 +1,0 @@
---require should
---compilers coffee:coffee-script/register,ts:typescript-node/register,tsx:typescript-node/register
---recursive
---colors
---bail
