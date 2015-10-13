@@ -1,19 +1,14 @@
-/// <reference path='../typings/tsd.d.ts'/>
+/// <reference path='../../typings/tsd.d.ts'/>
 
 import * as React from 'react';
 
 
-interface Props {
+interface Props extends React.Props<DigitalDisplay> {
   digits: number;
   number: number;
 }
 
 export default class DigitalDisplay extends React.Component<Props, {}> {
-
-  static PropTypes: {[index: string]: React.Requireable<any>} = {
-    digits: React.PropTypes.number,
-    number: React.PropTypes.number,
-  }
 
   static defaultProps: Props = {
     digits: 3,
@@ -35,7 +30,7 @@ export default class DigitalDisplay extends React.Component<Props, {}> {
 
     const digits = [];
     for (let i = 0; i < num.length; i++) {
-      digits.push(<span className={`ms-digit ms-digit-${num.charAt(i)}`}></span>);
+      digits.push(<span className={`ms-digit ms-digit-${num.charAt(i)}`} key={`digit-${i}`}></span>);
     }
 
     return (

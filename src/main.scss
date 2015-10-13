@@ -2,38 +2,72 @@ $tile-size: 16;
 $border-size: 12;
 
 .ms-minesweeper {
-  // display: flex;
-  // flex-wrap: wrap;
-  // justify-content: space-around;
-  // align-content: space-around;
+  image-rendering: pixelated;
 
+  display: inline-block;
   box-sizing: border-box;
-  width: 100%;
-  height: 100%;
 
-  border: $border-size * 1px;
-  border-image-repeat: repeat;
-  border-image-slice: $border-size;
-  border-image-source: url("textures/borders.png");
+  background-color: #c0c0c0;
 
   .icon {
     display: inline-block;
+    line-height: 0;
     background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  .ms-top {
+    padding: 4px 7px;
+
+    border: $border-size * 1px;
+    border-image-repeat: repeat;
+    border-image-slice: $border-size;
+    border-image-source: url("textures/borders-top.png");
+
+    .ms-digital_display:first-of-type {
+      float: left;
+    }
+
+    .ms-digital_display:last-of-type {
+      float: right;
+    }
+  }
+
+  .ms-board {
+    overflow: auto;
+    zoom: 1;
+
+    border-width: 0 $border-size * 1px $border-size * 1px;
+
+    border-image-repeat: repeat;
+    border-image-slice: 0 $border-size $border-size;
+    border-image-source: url("textures/borders-bottom.png");
   }
 
   .ms-tile {
     @extend .icon;
 
-    flex-grow: 1;
+    float: left;
     min-width: $tile-size * 1px;
     min-height: $tile-size * 1px;
 
     &.ms-default {
       background-image: url("textures/tile/default.png");
+
+      // &:active {
+      //   background-image: url("textures/tile/default-pressed.png");
+      // }
+      &.ms-pressed {
+        background-image: url("textures/tile/default-pressed.png");
+      }
     }
 
     &.ms-flagged {
       background-image: url("textures/tile/flagged.png");
+    }
+
+    &.ms-flagged-incorrect {
+      background-image: url("textures/tile/revealed-marked-incorrect.png");
     }
 
     @for $i from 0 through 8 {
@@ -42,17 +76,24 @@ $border-size: 12;
       }
     }
 
-    &.ms-revealed-bomb-diffused {
-      background-image: url("textures/tile/revealed-bomb-diffused.png");
+    &.ms-revealed-#{-1}, &.ms-revealed-bomb {
+      background-image: url("textures/tile/revealed-bomb.png");
     }
 
     &.ms-revealed-bomb-exploded {
-      background-image: url("textures/tile/revealed-bomb-exploded.png");
+      background-image: url("textures/tile/revealed-bomb-clicked.png");
     }
+
   }
 
   .ms-digital_display {
+    @extend .icon;
     position: relative;
+
+    border-width: 1px;
+    border-image-repeat: repeat;
+    border-image-slice: 1;
+    border-image-source: url("textures/borders-single.png");
 
     .ms-digit {
       @extend .icon;
@@ -65,23 +106,32 @@ $border-size: 12;
           background-image: url("textures/digits/digit-#{$i}.png");
         }
       }
+
+      &.ms-digit-- {
+        background-image: url("textures/digits/digit-nil.png");
+      }
     }
   }
 
   .ms-dude {
     @extend .icon;
+    display: block;
 
-    min-width: 26px;
-    min-height: 26px;
+    width: 26px;
+    height: 26px;
+    margin: 0 auto;
 
-    $faces: "default" "dead" "pressed" "win";
+    $faces: "default" "dead" "win";
     @each $face in $faces {
       &.ms-dude-#{$face} {
         background-image: url("textures/face/#{$face}.png");
       }
+      &.ms-dude-#{$face}:active {
+        background-image: url("textures/face/#{$face}-pressed.png");
+      }
     }
-    &.ms-dude-default:active {
-      background-image: url("textures/face/default_pressed.png");
+    &.ms-dude-pressed {
+      background-image: url("textures/face/pressed.png");
     }
   }
 

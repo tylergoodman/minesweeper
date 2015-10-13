@@ -8,8 +8,8 @@ describe 'Game', ->
       ms = new Minesweeper
       ms.should.be.an.instanceof Minesweeper
       ms.should.have.properties {
-        width: 16
-        height: 30
+        width: 30
+        height: 16
         mines: 99
       }
       ms.should.have.property('tiles').which.is.an.Array
@@ -49,13 +49,6 @@ describe 'Game', ->
         else
           ms.getAdjacentTiles(i).map((i) -> ms.tiles[i]).filter((tile) -> tile.isBomb()).length.should.equal tile.value
 
-  describe '#start', ->
-    it 'sets the start time', ->
-      ms = new Minesweeper
-      ms.start()
-      ms.time.should.be.a.Number
-      ms.state.should.equal Minesweeper.State.RUNNING
-
   describe '#toggleMarkTile', ->
     it 'returns the Minesweeper instance', ->
       ms = new Minesweeper
@@ -90,6 +83,14 @@ describe 'Game', ->
     it 'returns the Minesweeper instance', ->
       ms = new Minesweeper
       ms.revealTile(0).should.equal ms
+    it 'sets the state to RUNNING', ->
+      ms = new Minesweeper
+      ms.revealTile 0
+      ms.state.should.equal Minesweeper.State.RUNNING
+    it 'sets the timer', ->
+      ms = new Minesweeper
+      ms.revealTile 0
+      ms.time.should.be.aboveOrEqual 1
     it 'can reference tiles by index', ->
       ms = new Minesweeper
       ms.revealTile 0
@@ -115,13 +116,29 @@ describe 'Game', ->
       bomb.state.should.equal Minesweeper.Tile.State.DEFAULT
       ms.tiles[bomb_index].should.equal safe
       ms.tiles[safe_index].should.equal bomb
+    it 'will put the game in the LOSE state if tile is a bomb', ->
+      ms = new Minesweeper
+      for tile, i in ms.tiles
+        if tile.isBomb()
+          bomb_index = i;
+          break;
+      bomb = ms.tiles[bomb_index]
+      # pretend we've made our first move already
+      ms._first_turn = false;
+      ms.revealTile bomb_index
+      ms.state.should.equal Minesweeper.State.LOSE
+    it 'will pu the game in the WIN state if all non-bomb tiles are revealed', ->
+      ms = new Minesweeper 1, 1, 0
+      ms.revealTile 0
+      ms.state.should.equal Minesweeper.State.WIN
+
 
   describe '#_getCoordinates', ->
     it 'returns coordinates of an index', ->
       ms = new Minesweeper
-      ms._getCoordinates(50).should.eql [3, 2]
+      ms._getCoordinates(50).should.eql [20, 1]
 
   describe '#_getIndex', ->
     it 'returns the index of a pair of coordinates', ->
       ms = new Minesweeper
-      ms._getIndex(3, 2).should.equal 50
+      ms._getIndex(20, 1).should.equal 50

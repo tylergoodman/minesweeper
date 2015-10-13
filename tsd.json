@@ -9,7 +9,7 @@
       "commit": "8efeb01304406a7ef0b49e449630e1bfaefe52ba"
     },
     "react/react.d.ts": {
-      "commit": "9ce3cd4ded7536d40b8d65264ad729f442f5a052"
+      "commit": "66f88ec51858bb21bc375fa91a963c04bc09401e"
     },
     "lodash/lodash.d.ts": {
       "commit": "5f480287834a2615274eea31574b713e64decf17"
@@ -19,6 +19,9 @@
     },
     "should/should.d.ts": {
       "commit": "4356af494c045299110677b21e62000957e7a72e"
+    },
+    "react-dom/react-dom.d.ts": {
+      "commit": "66f88ec51858bb21bc375fa91a963c04bc09401e"
     }
   }
 }
